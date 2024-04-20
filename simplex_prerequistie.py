@@ -1,5 +1,6 @@
 import tabulate
 from simplex_exception import SimplexException
+from simplex_pre_rule import Sign, SimplexPreRule
 from simplex_rule import SimplexRule
 
 
@@ -21,11 +22,11 @@ def is_unit_vector(vector: list[float]) -> bool:
 class SimplexPrerequistie:
 
     C_coefs: list[float]
-    rules: list[SimplexRule]
+    rules: list[SimplexPreRule]
 
     def __init__(self,
                  C_coefs: list[float],
-                 rules: list[SimplexRule]):
+                 rules: list[SimplexPreRule]):
         var_count = len(C_coefs)
         for rule in rules:
             if len(rule.coefs) != var_count:
@@ -35,19 +36,26 @@ class SimplexPrerequistie:
         self.rules = rules
 
     def canonized(self):
-        # add zeros to the end
-        canon_C_coefs = [*self.C_coefs, *[0 for _ in range(len(self.rules))]]
-        canon_rules = []
+        canon_C_coefs = [*self.C_coefs]
+        canon_rules = [r.copy() for r in self.rules]
+
         for i, rule in enumerate(self.rules):
-            canon_rule = SimplexRule(
-                coefs=[
-                    *rule.coefs,
-                    # add zero or one
-                    *[1 if i == s_i else 0 for s_i in range(len(self.rules))]
-                    ],
-                result=rule.result
-            )
-            canon_rules.append(canon_rule)
+            if rule.sign == Sign.eq:
+                continue
+            # do something only on <=
+            for canon_i, canon_rule in enumerate(canon_rules):
+                canon_rule.coefs.append(1 if canon_i == i else 0)
+            
+            canon_C_coefs.append(0)
+            # canon_rule = SimplexPreRule(
+            #     coefs=[
+            #         *rule.coefs,
+            #         # add zero or one
+            #         *[1 if i == s_i else 0 for s_i in range(len(self.rules))]
+            #         ],
+            #     result=rule.result
+            # )
+            # canon_rules.append(canon_rule)
 
         return SimplexPrerequistie(canon_C_coefs, canon_rules)
 
@@ -75,7 +83,7 @@ def show_pr(pr: SimplexPrerequistie, canonized: bool = False) -> str:
     Z_func = ["Z = ", *[f"{c}" for c in pr.C_coefs], "", ""]
     rules = []
     for i, rule in enumerate(pr.rules):
-        rule = ["", *rule.coefs, "=" if canonized else "<=", f"{rule.result}"]
+        rule = ["", *rule.coefs, rule.sign.value, f"{rule.result}"]
         rules.append(rule)
     res = tabulate.tabulate(
         headers=header,
