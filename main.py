@@ -1,8 +1,10 @@
-from spl import SimplexPrerequistie, SimplexRule, show_pr, SimplexIterationData
+from spl import (SimplexPrerequistie, SimplexRule, show_pr,
+                 show_iter, SimplexIterationData)
+from zhordan import zhordan
 
 pr = SimplexPrerequistie(
-    C_coefs = [-1, 1, 4],
-    rules = [
+    C_coefs=[-1, 1, 4],
+    rules=[
         SimplexRule([1, 2, -3], 3),
         SimplexRule([2, -1, 4], 1)
     ]
@@ -27,6 +29,15 @@ print(f"has_answer: {iter1D.has_answer()}")
 print(f"primary_column_k: {iter1D.primary_column_k}")
 print(f"primary_row_l: {iter1D.primary_row_l}")
 
+print("first table: ")
+show_iter(iter1D)
+
+zh = zhordan(iter1D)
+print("second table: ")
+show_iter(zh)
+zh1 = zhordan(zh)
+print("third table: ")
+show_iter(zh1)
 # from simplex_table import SimplexTable, SimplexRule
 
 # t1 = SimplexTable(
@@ -36,4 +47,3 @@ print(f"primary_row_l: {iter1D.primary_row_l}")
 #         SimplexRule([2, -1, 4], 1)
 #     ]
 # )
-
