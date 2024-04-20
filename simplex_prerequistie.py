@@ -14,7 +14,7 @@ def is_unit_vector(vector: list[float]) -> bool:
         if x == 1:
             ones += 1
 
-    if zeros + ones != len(vector):
+    if ones != 1 or zeros + ones != len(vector):
         return False
     return True
 
@@ -40,6 +40,8 @@ class SimplexPrerequistie:
         canon_rules = [r.copy() for r in self.rules]
 
         for i, rule in enumerate(self.rules):
+            canon_rules[i].sign = Sign.eq
+
             if rule.sign == Sign.eq:
                 continue
             # do something only on <=
@@ -47,15 +49,6 @@ class SimplexPrerequistie:
                 canon_rule.coefs.append(1 if canon_i == i else 0)
             
             canon_C_coefs.append(0)
-            # canon_rule = SimplexPreRule(
-            #     coefs=[
-            #         *rule.coefs,
-            #         # add zero or one
-            #         *[1 if i == s_i else 0 for s_i in range(len(self.rules))]
-            #         ],
-            #     result=rule.result
-            # )
-            # canon_rules.append(canon_rule)
 
         return SimplexPrerequistie(canon_C_coefs, canon_rules)
 
@@ -78,7 +71,7 @@ class SimplexPrerequistie:
         return basis_vars
 
 
-def show_pr(pr: SimplexPrerequistie, canonized: bool = False) -> str:
+def show_pr(pr: SimplexPrerequistie) -> str:
     header = ["", *[f"x_{i+1}" for i in range(len(pr.C_coefs))], "", ""]
     Z_func = ["Z = ", *[f"{c}" for c in pr.C_coefs], "", ""]
     rules = []
@@ -93,5 +86,4 @@ def show_pr(pr: SimplexPrerequistie, canonized: bool = False) -> str:
         ],
         tablefmt="grid"
     )
-    print(f"prerequesties{' (canonized)' if canonized else ''}:")
     print(res)
