@@ -27,34 +27,3 @@ pr1 = SimplexPrerequistie(
 s1 = SimplexMethod(pr1)
 s1.solve()
 print(s1.result)
-# canon = pr.canonized()
-# show_pr(pr)
-# show_pr(canon, canonized=True)
-# basis = canon.get_basis()
-# print(f"basis: {basis}")
-
-# iter1D = SimplexIteration(
-#     C_coefs=canon.C_coefs,
-#     rules=canon.rules,
-#     basis=basis
-# )
-
-# print(f"delta: {iter1D.delta}")
-# print(f"is_optimal: {iter1D.is_optimal()}")
-# print(f"has_answer: {iter1D.can_optimize()}")
-
-# print(f"primary_column_k: {iter1D.primary_column_k}")
-# print(f"primary_row_l: {iter1D.primary_row_l}")
-
-# print("first table: ")
-# show_iter(iter1D)
-
-# zh = zhordan(iter1D)
-# print("second table: ")
-# show_iter(zh)
-# zh1 = zhordan(zh)
-# print("third table: ")
-# show_iter(zh1)
-
-# print(f"is_optimal: {zh1.is_optimal()}")
-# print(f"has_answer: {zh1.can_optimize()}")
