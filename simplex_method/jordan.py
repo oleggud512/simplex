@@ -1,7 +1,11 @@
 from .simplex_prerequistie import SimplexRule
 from .simplex_iteration import SimplexIteration
 
-def zhordan(it: SimplexIteration) -> SimplexIteration:
+
+def jordan(it: SimplexIteration) -> SimplexIteration:
+    """
+    здійснє перетворення Жордана.
+    """
     k = it.primary_column_k
     ll = it.primary_row_l
     # print(f"zhordan: k={k}, l={ll}")

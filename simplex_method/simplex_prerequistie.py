@@ -5,6 +5,9 @@ from .simplex_rule import SimplexRule
 
 
 def is_unit_vector(vector: list[float]) -> bool:
+    """
+    Перевіряє, чи є вектор одиничним.
+    """
     zeros = 0
     ones = 0
 
@@ -20,7 +23,9 @@ def is_unit_vector(vector: list[float]) -> bool:
 
 
 class SimplexPrerequistie:
-
+    """
+    Є відображенням умови задачі лінійного програмування.
+    """
     C_coefs: list[float]
     rules: list[SimplexPreRule]
 
@@ -36,6 +41,10 @@ class SimplexPrerequistie:
         self.rules = rules
 
     def canonized(self):
+        """
+        Приводить умову задачі до канонічного вигляду. 
+        (Реалізовано тільки перетворення нерівностей типу "<=")
+        """
         canon_C_coefs = [*self.C_coefs]
         canon_rules = [r.copy() for r in self.rules]
 
@@ -54,7 +63,7 @@ class SimplexPrerequistie:
 
     def get_basis(self) -> list[float]:
         """
-        повертає список індексів базисних змінних
+        Повертає список індексів базисних змінних.
         """
         basis_vars = []
         for vector_i in range(len(self.C_coefs)):
@@ -77,6 +86,9 @@ def show_pr(
         rule_names: list[str] = None,
         z_name: str = None
         ) -> str:
+    """
+    Вивід умови ЗЛП у термінал.
+    """
     header = ["", *[f"x_{i+1}" if x_names is None else x_names[i] for i in range(len(pr.C_coefs))], "", ""]
     Z_func = ["Z = " if z_name is None else z_name, *[f"{c}" for c in pr.C_coefs], "", ""]
     rules = []

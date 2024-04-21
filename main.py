@@ -1,7 +1,7 @@
 from simplex_method.simplex_pre_rule import Sign, SimplexPreRule
 from simplex_method.simplex_prerequistie import SimplexPrerequistie, SimplexRule, show_pr
 from simplex_method.simplex_iteration import show_iter, SimplexIteration
-from simplex_method.zhordan import zhordan
+from simplex_method.jordan import jordan
 from simplex_method.simplex_method import SimplexMethod
 
 pr = SimplexPrerequistie(

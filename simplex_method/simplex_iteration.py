@@ -3,6 +3,9 @@ from .simplex_rule import SimplexRule
 from .simplex_exception import SimplexException
 
 class SimplexIteration:
+    """
+    Є відображенням однієї симплекс таблиці.
+    """
     C_coefs: list[float]
     rules: list[SimplexRule]
     basis: list[float]
@@ -18,6 +21,9 @@ class SimplexIteration:
         self.delta = self._get_delta()
 
     def _get_delta(self) -> list[float]:
+        """
+        Повертає значення delta для поточної симплекс таблиці.
+        """
         delta_values = []
         for k in range(len(self.C_coefs)):
             delta_k = 0
@@ -28,10 +34,16 @@ class SimplexIteration:
         return delta_values
 
     def is_optimal(self) -> bool:
+        """
+        Таблиця є оптимальною, якщо кожне значення `delta_k` є більшим за нуль.
+        """
         opt = all(delta_k >= 0 for delta_k in self.delta)
         return opt
 
     def can_optimize(self) -> bool:
+        """
+        Неоптимізовану таблицю можна оптимізувати, якщо хоча б одного із негативних значень `delta_k` є позитивне значення a_ik.
+        """
         can_opt = False
         for k, delta_k in enumerate(self.delta):
             if delta_k >= 0:
@@ -43,8 +55,8 @@ class SimplexIteration:
     @property
     def primary_column_k(self) -> int:
         """
-        якщо рішення не оптимальне, повертає індекс ведучого стовпця (k)
-        викидує виключення якщо рішення оптимальне
+        Якщо рішення не оптимальне, повертає індекс ведучого стовпця (k).
+        Якщо оптимальне, викидує виключення.
         """
         if self.is_optimal():
             raise SimplexException(
@@ -57,8 +69,8 @@ class SimplexIteration:
     @property
     def primary_row_l(self) -> int:
         """
-        якщо рішення не оптимальне, повертає індекс ведучої строки (l)
-        викидує виключення якщо рішення оптимальне
+        Якщо рішення не оптимальне, повертає індекс ведучої строки (l).
+        Якщо оптимальне, викидує виключення.
         """
         if self.is_optimal():
             raise SimplexException(
@@ -84,6 +96,9 @@ class SimplexIteration:
 
     @property
     def var_values(self) -> list[float]:
+        """
+        Повертає значення змінних x для поточної симплекс таблиці.
+        """
         vals = []
         for j in range(len(self.C_coefs)):
             if j in self.basis:
@@ -95,6 +110,9 @@ class SimplexIteration:
 
     @property
     def Z_func_result(self) -> float:
+        """
+        Повертає результат цільової функції.
+        """
         res = 0
         vals = self.var_values
         for j in range(len(self.C_coefs)):
@@ -103,6 +121,9 @@ class SimplexIteration:
 
 
 def show_iter(iter: SimplexIteration):
+    """
+    Виводить таблицю в термінал.
+    """
     preheader = ["", "", "", *[f"{c}" for c in iter.C_coefs]]
     header = ["B", "C_баз", "X",
               *[f"P_{j+1}" for j in range(len(iter.C_coefs))]]

@@ -7,6 +7,9 @@ class Sign(Enum):
     leq = "<="
 
 class SimplexPreRule(SimplexRule):
+    """
+    Відображення обмеження ЗЛП у неканонічній формі.
+    """
     sign: Sign
 
     def __init__(self, coefs: list[float], sign: Sign, result: float):

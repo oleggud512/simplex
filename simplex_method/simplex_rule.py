@@ -1,4 +1,7 @@
 class SimplexRule:
+    """
+    Відображає одну нерівність із системи обмежень ЗЛП.
+    """
     coefs: list[float]
     result: float
 

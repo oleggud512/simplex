@@ -1,9 +1,13 @@
+from simplex_method.simplex_exception import SimplexException
 from .simplex_prerequistie import SimplexPrerequistie, show_pr
 from .simplex_iteration import SimplexIteration, show_iter
-from .zhordan import zhordan
+from .jordan import jordan
 
 
 class SimplexMethod:
+    """
+    Вирішує ЗЛП використовуючи симплекс метод.
+    """
     should_log: bool = False
     iter_num: int = 1
     prereq: SimplexPrerequistie
@@ -32,13 +36,17 @@ class SimplexMethod:
             show_iter(self.iter)
     
     def solve(self):
+        """
+        Виконує перетворення Жордана над `iter`, допоки результат не стане оптимальним.
+        """
         while not self.iter.is_optimal() and self.iter.can_optimize():
-            self.iter = zhordan(self.iter)
+            self.iter = jordan(self.iter)
             self.iter_num += 1
             if self.should_log:
                 print(f"table {self.iter_num}:")
                 show_iter(self.iter)
         
+        # перетворення оптмальної симплкес таблиці на "справжній" результат
         res = []
         for j in range(self.real_vars_count):
             if j in self.iter.basis:
@@ -54,6 +62,12 @@ class SimplexMethod:
     
     @property
     def spare_resources(self) -> list[float]:
+        """
+        Рахує залишок ресурсів після знаходження результату.
+        """
+        if self.result is None:
+            raise SimplexException("Can't compute spare resources without result.")
+        
         spare_resources = []
         for  i in range(len(self.prereq.rules)):
             ava_groc = self.prereq.rules[i].result
