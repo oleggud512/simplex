@@ -1,6 +1,6 @@
 import tabulate
-from simplex_rule import SimplexRule
-from simplex_exception import SimplexException
+from .simplex_rule import SimplexRule
+from .simplex_exception import SimplexException
 
 class SimplexIteration:
     C_coefs: list[float]

@@ -1,8 +1,8 @@
-from simplex_pre_rule import Sign, SimplexPreRule
-from simplex_prerequistie import SimplexPrerequistie, SimplexRule, show_pr
-from simplex_iteration import show_iter, SimplexIteration
-from zhordan import zhordan
-from simplex_method import SimplexMethod
+from simplex_method.simplex_pre_rule import Sign, SimplexPreRule
+from simplex_method.simplex_prerequistie import SimplexPrerequistie, SimplexRule, show_pr
+from simplex_method.simplex_iteration import show_iter, SimplexIteration
+from simplex_method.zhordan import zhordan
+from simplex_method.simplex_method import SimplexMethod
 
 pr = SimplexPrerequistie(
     C_coefs=[-1, 1, 4],

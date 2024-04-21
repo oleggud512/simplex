@@ -1,7 +1,7 @@
 import tabulate
-from simplex_exception import SimplexException
-from simplex_pre_rule import Sign, SimplexPreRule
-from simplex_rule import SimplexRule
+from .simplex_exception import SimplexException
+from .simplex_pre_rule import Sign, SimplexPreRule
+from .simplex_rule import SimplexRule
 
 
 def is_unit_vector(vector: list[float]) -> bool:

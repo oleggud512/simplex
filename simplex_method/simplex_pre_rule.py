@@ -1,5 +1,5 @@
 from enum import Enum
-from simplex_rule import SimplexRule
+from .simplex_rule import SimplexRule
 
 
 class Sign(Enum):

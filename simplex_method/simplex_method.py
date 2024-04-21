@@ -1,6 +1,6 @@
-from simplex_prerequistie import SimplexPrerequistie, show_pr
-from simplex_iteration import SimplexIteration, show_iter
-from zhordan import zhordan
+from .simplex_prerequistie import SimplexPrerequistie, show_pr
+from .simplex_iteration import SimplexIteration, show_iter
+from .zhordan import zhordan
 
 
 class SimplexMethod:

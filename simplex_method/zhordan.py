@@ -1,5 +1,5 @@
-from simplex_prerequistie import SimplexRule
-from simplex_iteration import SimplexIteration
+from .simplex_prerequistie import SimplexRule
+from .simplex_iteration import SimplexIteration
 
 def zhordan(it: SimplexIteration) -> SimplexIteration:
     k = it.primary_column_k
