@@ -41,3 +41,18 @@ pr2 = SimplexPrerequistie(
 s2 = SimplexMethod(pr2, should_log=True)
 s2.solve()
 print(s2.result)
+
+pr3 = SimplexPrerequistie(
+    C_coefs=[50, 40, 35],
+    rules=[
+        SimplexPreRule([0.4, 0.6, 0.5], Sign.leq, 800),
+        SimplexPreRule([0.4, 0.4, 0.3], Sign.leq, 600),
+        SimplexPreRule([0.2, 0, 0.2], Sign.leq, 50),
+        SimplexPreRule([0.1, 0, 0.08], Sign.leq, 30)
+    ]
+)
+
+s3 = SimplexMethod(pr3, should_log=True)
+s3.solve()
+print(s3.result)
+print(f"resources: {[rule.result for rule in s3.prereq.rules]}\nspare: {s3.spare_resources}")

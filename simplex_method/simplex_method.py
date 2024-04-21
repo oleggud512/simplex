@@ -6,6 +6,7 @@ from .zhordan import zhordan
 class SimplexMethod:
     should_log: bool = False
     iter_num: int = 1
+    prereq: SimplexPrerequistie
     iter: SimplexIteration
     real_vars_count: int
     result: list[float] = None
@@ -13,7 +14,7 @@ class SimplexMethod:
     def __init__(self, prereq: SimplexPrerequistie, should_log: bool = False):
         self.should_log = should_log
         self.real_vars_count = len(prereq.C_coefs)
-        
+        self.prereq = prereq
         canon = prereq.canonized()
 
         self.iter = SimplexIteration(
@@ -47,6 +48,17 @@ class SimplexMethod:
             res.append(0)
 
         self.result = res
-
+        
         if self.should_log:
             print(f"result: {self.result}")
+    
+    @property
+    def spare_resources(self) -> list[float]:
+        spare_resources = []
+        for  i in range(len(self.prereq.rules)):
+            ava_groc = self.prereq.rules[i].result
+            used_groc = 0
+            for j in range(len(self.prereq.C_coefs)):
+                used_groc += self.result[j] * self.prereq.rules[i].coefs[j]
+            spare_resources.append(ava_groc - used_groc)
+        return spare_resources

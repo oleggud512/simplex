@@ -71,12 +71,17 @@ class SimplexPrerequistie:
         return basis_vars
 
 
-def show_pr(pr: SimplexPrerequistie) -> str:
-    header = ["", *[f"x_{i+1}" for i in range(len(pr.C_coefs))], "", ""]
-    Z_func = ["Z = ", *[f"{c}" for c in pr.C_coefs], "", ""]
+def show_pr(
+        pr: SimplexPrerequistie, 
+        x_names: list[str] = None, 
+        rule_names: list[str] = None,
+        z_name: str = None
+        ) -> str:
+    header = ["", *[f"x_{i+1}" if x_names is None else x_names[i] for i in range(len(pr.C_coefs))], "", ""]
+    Z_func = ["Z = " if z_name is None else z_name, *[f"{c}" for c in pr.C_coefs], "", ""]
     rules = []
     for i, rule in enumerate(pr.rules):
-        rule = ["", *rule.coefs, rule.sign.value, f"{rule.result}"]
+        rule = ["" if rule_names is None else rule_names[i], *rule.coefs, rule.sign.value, f"{rule.result}"]
         rules.append(rule)
     res = tabulate.tabulate(
         headers=header,
@@ -84,6 +89,8 @@ def show_pr(pr: SimplexPrerequistie) -> str:
             Z_func,
             *rules
         ],
-        tablefmt="grid"
+        tablefmt="grid",
+        numalign="center",
+        stralign="center"
     )
     print(res)
