@@ -1,9 +1,9 @@
 #### Консолькний додаток реалізації сиплекс методу вирішення задач оптимізації
 
-<img src="img/s1">
+<img src="img/s1.png">
 
 Вирішення:
 
-<img src="img/s2">
+<img src="img/s2.png">
 
-<img src="img/s3">
+<img src="img/s3.png">
